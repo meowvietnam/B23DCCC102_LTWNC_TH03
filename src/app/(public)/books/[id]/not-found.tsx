@@ -2,9 +2,12 @@ import Link from "next/link";
 
 export default function BookNotFound() {
   return (
-    <section>
+    <section className="card empty">
       <h1>Không tìm thấy sách</h1>
-      <Link href="/books">Quay lại danh mục sách</Link>
+      <p>Sách bạn tìm không có trong thư viện.</p>
+      <Link href="/books" className="btn">
+        Quay lại danh mục sách
+      </Link>
     </section>
   );
 }

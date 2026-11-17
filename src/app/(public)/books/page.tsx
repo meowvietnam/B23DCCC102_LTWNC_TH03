@@ -28,11 +28,14 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
 
   return (
     <section>
-      <h1>Danh mục sách</h1>
-      <form method="get" action="/books" className="filters">
+      <div className="page-head">
+        <h1>Danh mục sách</h1>
+      </div>
+
+      <form method="get" action="/books" className="card filters">
         <div className="field">
           <label htmlFor="q">Tìm sách</label>
-          <input id="q" name="q" type="search" defaultValue={q} />
+          <input id="q" name="q" type="search" placeholder="Nhập tên sách..." defaultValue={q} />
         </div>
         <div className="field">
           <label htmlFor="category">Chuyên mục</label>
@@ -45,37 +48,45 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
             ))}
           </select>
         </div>
-        <div className="field">
+        <div className="field action">
           <button type="submit">Lọc</button>
         </div>
       </form>
 
-      <p>Tìm thấy {books.length} sách</p>
-      <p className="muted">Render lúc: {nowTime()}</p>
+      <div className="result-bar">
+        <strong>Tìm thấy {books.length} sách</strong>
+        <span className="muted small">Render lúc: {nowTime()}</span>
+      </div>
 
       {books.length === 0 ? (
-        <p>Không tìm thấy sách nào</p>
+        <div className="card empty">Không tìm thấy sách nào</div>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Tên sách</th>
-              <th>Tác giả</th>
-              <th>Số bản</th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map((b) => (
-              <tr key={b.id}>
-                <td>
-                  <Link href={`/books/${b.id}`}>{b.title}</Link>
-                </td>
-                <td>{b.author}</td>
-                <td>Số bản: {b.copies}</td>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tên sách</th>
+                <th>Tác giả</th>
+                <th>Chuyên mục</th>
+                <th>Số bản</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {books.map((b) => (
+                <tr key={b.id}>
+                  <td>
+                    <Link href={`/books/${b.id}`}>{b.title}</Link>
+                  </td>
+                  <td>{b.author}</td>
+                  <td>
+                    <span className="badge">{b.category}</span>
+                  </td>
+                  <td>Số bản: {b.copies}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </section>
   );

@@ -17,29 +17,45 @@ export default function Header() {
   }, [pathname]);
 
   const user = session?.user;
+  const isActive = (href: string): string =>
+    (href === '/' ? pathname === '/' : pathname.startsWith(href)) ? 'active' : '';
 
   return (
     <header className="site-header">
-      <nav>
-        <Link href="/">Trang chủ</Link>
-        <Link href="/books">Sách</Link>
-        {user && <Link href="/loans">Sách đã mượn</Link>}
-        {user && can(user.role, 'loan:review') && <Link href="/admin">Quản trị</Link>}
-      </nav>
-      <nav style={{ marginLeft: 'auto' }}>
-        {status === 'loading' ? null : user ? (
-          <>
-            <span>
-              Xin chào, {user.name} ({user.role})
-            </span>
-            <button type="button" onClick={() => signOut({ redirectTo: '/' })}>
-              Đăng xuất
-            </button>
-          </>
-        ) : (
-          <Link href="/login">Đăng nhập</Link>
-        )}
-      </nav>
+      <div className="site-header-inner">
+        <Link href="/" className="brand">
+          <span className="brand-logo">IT</span>
+          <span>Thư viện CNTT</span>
+        </Link>
+        <nav className="nav">
+          <Link href="/" className={isActive('/')}>Trang chủ</Link>
+          <Link href="/books" className={isActive('/books')}>Sách</Link>
+          {user && (
+            <Link href="/loans" className={isActive('/loans')}>Sách đã mượn</Link>
+          )}
+          {user && can(user.role, 'loan:review') && (
+            <Link href="/admin" className={isActive('/admin')}>Quản trị</Link>
+          )}
+        </nav>
+        <div className="user-area">
+          {status === 'loading' ? null : user ? (
+            <>
+              <span className="user-name">
+                Xin chào, {user.name} ({user.role})
+              </span>
+              <button
+                type="button"
+                className="btn-ghost btn-sm"
+                onClick={() => signOut({ redirectTo: '/' })}
+              >
+                Đăng xuất
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className="btn btn-sm">Đăng nhập</Link>
+          )}
+        </div>
+      </div>
     </header>
   );
 }

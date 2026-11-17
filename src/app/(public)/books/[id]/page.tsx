@@ -34,12 +34,29 @@ export default async function BookDetailPage({ params }: BookPageProps) {
 
   return (
     <article>
-      <h1>{book.title}</h1>
-      <p>Tác giả: {book.author}</p>
-      <p>Chuyên mục: {book.category}</p>
-      <p>Số bản: {book.copies}</p>
-      <p className="muted">Cập nhật lúc: {nowTime()}</p>
-      <Link href={`/loans?book=${book.id}`}>Mượn sách này</Link>
+      <Link href="/books" className="back-link">
+        ← Danh mục sách
+      </Link>
+      <div className="card book-detail">
+        <div className="book-cover" aria-hidden="true">
+          {book.title}
+        </div>
+        <div>
+          <span className="badge badge-brand">{book.category}</span>
+          <h1 style={{ marginTop: 10 }}>{book.title}</h1>
+          <ul className="meta">
+            <li>Tác giả: {book.author}</li>
+            <li>Chuyên mục: {book.category}</li>
+            <li>Số bản: {book.copies}</li>
+          </ul>
+          <Link href={`/loans?book=${book.id}`} className="btn">
+            Mượn sách này
+          </Link>
+          <p className="muted small" style={{ marginTop: 16 }}>
+            Cập nhật lúc: {nowTime()}
+          </p>
+        </div>
+      </div>
     </article>
   );
 }

@@ -1,3 +1,3 @@
 export default function Loading() {
-  return <p>Đang tải danh mục sách...</p>;
+  return <div className="card empty">Đang tải danh mục sách...</div>;
 }

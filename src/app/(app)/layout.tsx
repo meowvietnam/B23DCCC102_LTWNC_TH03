@@ -4,7 +4,7 @@ export default function MemberLayout({
   return (
     <>
       <p className="member-banner">Khu vực thành viên</p>
-      {children}
+      <div style={{ marginTop: 16 }}>{children}</div>
     </>
   );
 }

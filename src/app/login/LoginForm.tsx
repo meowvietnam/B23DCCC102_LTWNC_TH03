@@ -27,6 +27,9 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       <button type="submit" disabled={pending}>
         Đăng nhập
       </button>
+      <p className="hint">
+        Tài khoản thử: sv01@ptit.edu.vn hoặc admin@ptit.edu.vn (mật khẩu theo đề bài)
+      </p>
     </form>
   );
 }

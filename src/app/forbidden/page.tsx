@@ -7,9 +7,12 @@ export const metadata: Metadata = {
 
 export default function ForbiddenPage() {
   return (
-    <section>
+    <section className="card empty">
+      <p style={{ fontSize: 40, margin: 0 }} aria-hidden="true">🔒</p>
       <h1>Bạn không có quyền truy cập trang này</h1>
-      <Link href="/">Về trang chủ</Link>
+      <Link href="/" className="btn">
+        Về trang chủ
+      </Link>
     </section>
   );
 }

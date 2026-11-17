@@ -48,9 +48,12 @@ export default async function LoansPage({ searchParams }: LoansPageProps) {
 
   return (
     <section>
-      <h1>Sách đã mượn</h1>
+      <div className="page-head">
+        <h1>Sách đã mượn</h1>
+        <span className="muted small">{result.total} yêu cầu</span>
+      </div>
 
-      <form method="get" action="/loans" className="filters">
+      <form method="get" action="/loans" className="card filters">
         <div className="field">
           <label htmlFor="status">Trạng thái</label>
           <select id="status" name="status" defaultValue={status ?? ''}>
@@ -62,11 +65,12 @@ export default async function LoansPage({ searchParams }: LoansPageProps) {
             ))}
           </select>
         </div>
-        <div className="field">
+        <div className="field action">
           <button type="submit">Lọc</button>
         </div>
       </form>
 
+      <div className="table-wrap">
       <table>
         <thead>
           <tr>
@@ -86,40 +90,52 @@ export default async function LoansPage({ searchParams }: LoansPageProps) {
               <td>{formatDate(loan.pickupDate)}</td>
               <td>{TERM_LABEL[loan.term]}</td>
               <td>{loan.quantity} quyển</td>
-              <td>{STATUS_LABEL[loan.status]}</td>
-              {showOwner && <td>{loan.userEmail}</td>}
+              <td>
+                <span className={`badge badge-${loan.status}`}>
+                  {STATUS_LABEL[loan.status]}
+                </span>
+              </td>
+              {showOwner && <td className="muted">{loan.userEmail}</td>}
               {canCreate && (
-                <td>
+                <td className="actions-cell">
                   {loan.status === 'pending' && loan.userEmail === user.email && (
                     <form className="inline" action={cancelLoanAction.bind(null, loan.id)}>
-                      <button type="submit">Hủy</button>
+                      <button type="submit" className="btn-ghost btn-sm">Hủy</button>
                     </form>
                   )}
                 </td>
               )}
             </tr>
           ))}
+          {result.items.length === 0 && (
+            <tr>
+              <td colSpan={7} className="empty">Chưa có yêu cầu nào</td>
+            </tr>
+          )}
         </tbody>
       </table>
+      </div>
 
       <div className="pagination">
         {result.page > 1 ? (
           <Link href={pageHref(status, result.page - 1)}>Trước</Link>
         ) : (
-          <span>Trước</span>
+          <span className="disabled">Trước</span>
         )}
-        <span>
+        <span className="page-info">
           Trang {result.page}/{result.totalPages}
         </span>
         {result.page < result.totalPages ? (
           <Link href={pageHref(status, result.page + 1)}>Sau</Link>
         ) : (
-          <span>Sau</span>
+          <span className="disabled">Sau</span>
         )}
       </div>
 
       {canCreate && (
-        <LoanForm books={db.books} defaultBookId={defaultBookId} action={createLoanAction} />
+        <div className="card">
+          <LoanForm books={db.books} defaultBookId={defaultBookId} action={createLoanAction} />
+        </div>
       )}
     </section>
   );

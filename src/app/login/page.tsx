@@ -19,8 +19,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const target = (Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl) ?? '/loans';
 
   return (
-    <section>
+    <section className="card auth-card">
       <h1>Đăng nhập</h1>
+      <p className="muted small">Dùng tài khoản thư viện để mượn sách.</p>
       <LoginForm callbackUrl={target} />
     </section>
   );

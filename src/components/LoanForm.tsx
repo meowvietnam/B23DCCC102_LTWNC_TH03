@@ -35,7 +35,8 @@ export default function LoanForm({ books, defaultBookId, action }: LoanFormProps
     <form key={formKey} action={formAction} noValidate>
       <h2>Gửi yêu cầu mượn</h2>
 
-      <div className="field">
+      <div className="form-grid">
+      <div className="field full">
         <label htmlFor="bookId">Sách</label>
         <select
           id="bookId"
@@ -87,10 +88,17 @@ export default function LoanForm({ books, defaultBookId, action }: LoanFormProps
         <FieldError errors={errors} name="quantity" />
       </div>
 
-      <div className="field">
+      <div className="field full">
         <label htmlFor="reason">Lý do mượn</label>
-        <textarea id="reason" name="reason" rows={3} defaultValue={values.reason ?? ''} />
+        <textarea
+          id="reason"
+          name="reason"
+          rows={3}
+          placeholder="Ví dụ: Mượn để ôn thi môn Cơ sở dữ liệu"
+          defaultValue={values.reason ?? ''}
+        />
         <FieldError errors={errors} name="reason" />
+      </div>
       </div>
 
       <button type="submit" disabled={pending}>
