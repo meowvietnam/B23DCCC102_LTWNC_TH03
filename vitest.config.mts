@@ -9,6 +9,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
     coverage: {
+      // Hiện cả các file đạt 100% trong bảng coverage.
+      reporter: [['text', { skipFull: false }], 'html'],
       include: [
         'src/lib/permissions.ts',
         'src/lib/loan-schema.ts',
